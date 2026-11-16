@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d10">
+  <title>Stream Box</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/"><span class="led"></span> STREAM BOX</a>
+    <div id="roomInfo" class="room-info hidden">
+      <span id="roleBadge" class="badge"></span>
+      <code id="roomCode"></code>
+      <button id="copyLink" class="btn small">Salin link</button>
+      <button id="btnLeave" class="btn small ghost">Keluar</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="viewHome" class="view hidden">
+      <div class="panel narrow">
+        <h1>Soundboard kolaboratif real-time</h1>
+        <p class="muted">Putar BGM, SFX, dan ambience dari laptop Anda. Semua orang di room mendengarnya bersamaan.</p>
+
+        <label class="field">Nickname
+          <input id="homeNick" type="text" maxlength="20" placeholder="mis. DM Koi" autocomplete="off">
+        </label>
+
+        <button id="btnCreate" class="btn primary wide">Buat room baru</button>
+
+        <div class="divider"><span>atau gabung</span></div>
+
+        <div class="row">
+          <input id="joinCode" type="text" placeholder="Kode room / tempel link" autocomplete="off">
+          <button id="btnJoin" class="btn">Gabung</button>
+        </div>
+        <p id="homeError" class="error"></p>
+      </div>
+    </section>
+
+    <!-- JOIN (datang lewat link, atau lanjut sebagai host) -->
+    <section id="viewJoin" class="view hidden">
+      <div class="panel narrow">
+        <h1 id="joinTitle">Gabung room</h1>
+        <p class="muted">Room: <code id="joinRoomCode"></code></p>
+        <label class="field">Nickname
+          <input id="joinNick" type="text" maxlength="20" placeholder="Nama Anda" autocomplete="off">
+        </label>
+        <button id="joinBtn" class="btn primary wide">Masuk</button>
+        <p id="joinError" class="error"></p>
+      </div>
+    </section>
+
+    <!-- HOST -->
+    <section id="viewHost" class="view hidden">
+      <div class="host-grid">
+        <aside class="side">
+          <div class="panel">
+            <h2>Master</h2>
+            <input id="masterVol" type="range" min="0" max="100" value="80" aria-label="Master volume">
+            <button id="btnStopAll" class="btn wide danger">■ Stop semua</button>
+          </div>
+          <div class="panel">
+            <h2>Sedang diputar</h2>
+            <ul id="hNowPlaying" class="list"></ul>
+          </div>
+          <div class="panel">
+            <h2>Listener <span id="hListenerCount" class="muted"></span></h2>
+            <ul id="hListeners" class="list"></ul>
+          </div>
+          <div class="panel muted small">
+            <b>Shortcut</b><br>
+            <kbd>1</kbd>–<kbd>9</kbd> picu SFX ke-1…9<br>
+            <kbd>Esc</kbd> hentikan semua SFX<br><br>
+            Tab ini = sumber audio. Jangan ditutup atau di-sleep selama sesi.
+          </div>
+        </aside>
+        <div id="channels" class="channels"></div>
+      </div>
+    </section>
+
+    <!-- LISTENER -->
+    <section id="viewListener" class="view hidden">
+      <div class="panel narrow">
+        <h1>Mendengarkan</h1>
+        <p id="lStatus" class="status">Menghubungkan…</p>
+        <button id="unlockBtn" class="btn primary wide hidden">🔊 Ketuk untuk mengaktifkan audio</button>
+
+        <div class="row vol">
+          <button id="btnMute" class="btn small">🔊</button>
+          <input id="lVol" type="range" min="0" max="100" value="100" aria-label="Volume saya">
+        </div>
+
+        <h2>Sedang diputar</h2>
+        <ul id="lNowPlaying" class="list"></ul>
+
+        <h2>Listener <span id="lListenerCount" class="muted"></span></h2>
+        <ul id="lListeners" class="list"></ul>
+        <p id="lError" class="error"></p>
+      </div>
+      <audio id="remoteAudio" autoplay playsinline></audio>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+  <script src="/config.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
